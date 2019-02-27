@@ -115,6 +115,23 @@ class Communications {
 			});
 	}
 
+	getWaterOpConfigs() {
+		let options = { method: 'GET', headers: { Authorization: 'Bearer ' + this._token } };
+		let settings = PosStorage.getSettings();
+		let url = `sema/water-ops/configs/${settings.siteId}`;
+
+ 		return fetch(this._url + url, options)
+			.then((response) => response.json())
+			.then((responseJson) => {
+				console.log(JSON.stringify(responseJson));
+				return responseJson
+			})
+			.catch((error) => {
+				console.log("Communications:getWaterOpConfigs: " + error);
+				throw( error );
+			});
+	}
+
 	createCustomer(customer) {
 		// TODO - Resolve customer type.... Is it needed, currently hardcoded...
 		customer.customerType = 128;		// FRAGILE
@@ -344,6 +361,28 @@ class Communications {
 		};
 
 		let url = `sema/site/receipts/${siteId}?date=${moment.tz(new Date(Date.now()), moment.tz.guess()).format('YYYY-MM-DD')}`;
+
+		return fetch(this._url + url, options)
+			.then(response => response.json())
+			.catch(error => {
+				console.log("Communications:sendUpdatedReceipts: " + error);
+				throw (error);
+			});
+	}
+
+	// Sends the kiosk ID and the water operations and quality data for the day
+	sendWaterOps(siteId, username, waterOps) {
+		let options = {
+			method: 'POST',
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json',
+				Authorization: 'Bearer ' + this._token
+			},
+			body: JSON.stringify({waterOps})
+		};
+
+		let url = `sema/water-ops/${siteId}?date=${moment.tz(new Date(Date.now()), moment.tz.guess()).format('YYYY-MM-DD')}&username=${username}`;
 
 		return fetch(this._url + url, options)
 			.then(response => response.json())

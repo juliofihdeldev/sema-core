@@ -18,7 +18,10 @@ class Sidebar extends Component {
 						<Text style={this.getInventoryMenuStyle()}>{i18n.t('inventory')}</Text>
 					</TouchableHighlight>
 					<TouchableHighlight onPress={() => this.onSalesLog()}>
-						<Text style={this.getSalesLogMenuStyle()}>Sales Log</Text>
+						<Text style={this.getSalesLogMenuStyle()}>{i18n.t('sales-log')}</Text>
+					</TouchableHighlight>
+					<TouchableHighlight onPress={() => this.onWaterOps()}>
+						<Text style={this.getWaterOpsMenuStyle()}>{i18n.t('water-quality-and-flowmeter')}</Text>
 					</TouchableHighlight>
 				</View>
 		);
@@ -36,6 +39,10 @@ class Sidebar extends Component {
 		this.props.reportActions.setReportType("salesLog");
 	};
 
+	onWaterOps = () =>{
+		this.props.reportActions.setReportType("waterOps");
+	};
+
 	getSalesMenuStyle(){
 		return (this.props.reportType === "sales") ?
 			[styles.menuText, { color: "#3C93FC" }] :
@@ -50,6 +57,12 @@ class Sidebar extends Component {
 
 	getSalesLogMenuStyle(){
 		return (this.props.reportType === "salesLog") ?
+			[styles.menuText, { color: "#3C93FC" }] :
+			[styles.menuText]
+	}
+
+	getWaterOpsMenuStyle(){
+		return (this.props.reportType === "waterOps") ?
 			[styles.menuText, { color: "#3C93FC" }] :
 			[styles.menuText]
 	}

@@ -18,7 +18,7 @@ export default class App extends Component {
   async componentWillMount() {
     RNLanguages.addEventListener('change', this._onLanguagesChange);
     const savedSettings = await PosStorage.loadSettings();
-    const uiLanguage = !isEmptyObj(savedSettings) && !isEmptyObj(savedSettings.uiLanguage) ? savedSettings.uiLanguage : {name: 'English', iso_code: 'en'}
+    const uiLanguage = !isEmptyObj(savedSettings) && !isEmptyObj(savedSettings.uiLanguage) ? savedSettings.uiLanguage : { name: 'English', iso_code: 'en' }
     console.log(`Setting UI Language: ${JSON.stringify(uiLanguage)}`);
     i18n.locale = uiLanguage.iso_code;
   }
@@ -30,13 +30,13 @@ export default class App extends Component {
   _onLanguagesChange = ({ language }) => {
     i18n.locale = language;
   };
-  
+
   render() {
-      return (
-    <Provider store={store}>
-            <PosApp />
-    </Provider>
-      );
+    return (
+      <Provider store={store}>
+        <PosApp />
+      </Provider>
+    );
   }
 }
 
